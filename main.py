@@ -11,14 +11,17 @@ from admin_notifier import notify_admin
 # Load environment
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-ADMIN_CHAT_ID = int(os.getenv('ADMIN_CHAT_ID'))
+ADMIN_CHAT_ID = os.getenv('ADMIN_CHAT_ID')
+if ADMIN_CHAT_ID is None:
+    raise RuntimeError("ADMIN_CHAT_ID not set in environment")
+ADMIN_CHAT_ID = int(ADMIN_CHAT_ID)
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 # In-memory storage for booking data
-user_data = {}
+user_data: dict[int, BookingData] = {}
 
 # Start handler
 @dp.message(Command("start"))
@@ -103,15 +106,18 @@ async def handle_steps(message: types.Message):
         data.phone = message.contact.phone_number
         data.step = 'confirm'
         # Confirmation message
-        await message.answer(
-            f"""
-Подтвердите данные:
-Имя: {data.name}
-Телефон: {data.phone}
-Цель: {data.goal}
-Направление: {data.direction}
-            """
+        confirm_text = (
+            f"Подтвердите данные:
+"
+            f"Имя: {data.name}
+"
+            f"Телефон: {data.phone}
+"
+            f"Цель: {data.goal}
+"
+            f"Направление: {data.direction}"
         )
+        await message.answer(confirm_text)
         # Confirmation buttons
         kb = InlineKeyboardMarkup()
         kb.add(InlineKeyboardButton('Подтвердить', callback_data='CONFIRM'))
