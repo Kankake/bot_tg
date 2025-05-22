@@ -10,7 +10,7 @@ from admin_notifier import notify_admin
 
 # Load environment
 load_dotenv()
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv(7789111664:AAHFxzibymG5omwu7kI1N-oSOy1j4rscGr4)
 ADMIN_CHAT_ID = int(os.getenv('ADMIN_CHAT_ID'))
 
 logging.basicConfig(level=logging.INFO)
