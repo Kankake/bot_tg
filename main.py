@@ -95,12 +95,17 @@ async def handle_steps(message: types.Message):
     if message.contact and data.step == 'ask_phone':
         data.phone = message.contact.phone_number
         data.step = 'confirm'
+        # Properly close the f-string and parentheses
         await message.answer(
             f"Подтвердите данные:
-Имя: {data.name}
-Телефон: {data.phone}
-Цель: {data.goal}
-Направление: {data.direction}"
+"
+            f"Имя: {data.name}
+"
+            f"Телефон: {data.phone}
+"
+            f"Цель: {data.goal}
+"
+            f"Направление: {data.direction}"
         )
         kb = InlineKeyboardMarkup()
         kb.add(InlineKeyboardButton('Подтвердить', callback_data='CONFIRM'))
