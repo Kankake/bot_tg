@@ -2,13 +2,11 @@ import os
 
 async def notify_admin(bot, data):
     chat_id = int(os.getenv('ADMIN_CHAT_ID'))
-text = (
-    "Новая запись:\n"
-    f"Имя: {data.name}\n"
-    f"Телефон: {data.phone}\n"
-    f"Цель: {data.goal}\n"
-    f"Направление: {data.direction}"
-)
+text = f"""Новая запись:
+Имя: {data.name}
+Телефон: {data.phone}
+Цель: {data.goal}
+Направление: {data.direction}"""
     await bot.send_message(chat_id, text)
 ```python
 import os
